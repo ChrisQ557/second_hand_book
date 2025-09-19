@@ -1,0 +1,17 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Virtual environment
+venv/
+.venv/
+
+# Database
+db.sqlite3
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
