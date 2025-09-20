@@ -1,20 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>{{ book.title }}</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}{{ book.title }} | Second Hand Book{% endblock %}
+
+{% block content %}
   <h1>{{ book.title }}</h1>
   <p><strong>Author:</strong> {{ book.author }}</p>
   <p><strong>Published Date:</strong> {{ book.published_date }}</p>
   <p><strong>ISBN:</strong> {{ book.isbn }}</p>
-
-  {# Example link back to a list view, or link to this detail page from elsewhere #}
-  <p>
-    <a href="{% url 'books:book_detail' slug=book.slug %}">
-      View this book’s detail URL
-    </a>
-  </p>
-</body>
-</html>
+  <a href="{% url 'books:book_list' %}">Back to all books</a>
+{% endblock %}
