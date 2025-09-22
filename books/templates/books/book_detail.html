@@ -2,6 +2,12 @@
 
 {% block title %}{{ book.title }} | Second Hand Book{% endblock %}
 
+{% block nav_heading %}
+  <span class="navbar-text ms-3">
+    <h1 class="mb-0">Second Hand Books</h1>
+  </span>
+{% endblock %}
+
 {% block content %}
   <h1>{{ book.title }}</h1>
   <p><strong>Author:</strong> {{ book.author }}</p>

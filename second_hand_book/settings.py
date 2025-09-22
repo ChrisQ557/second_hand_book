@@ -27,7 +27,12 @@ SECRET_KEY = 'django-insecure-o#bqje9rvpbx4lo&a8(h_=9h1w6@_^6#2mu$q&x@8_o34z1gf7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DJANGO_DEBUG", "") != "False"
 
-ALLOWED_HOSTS = []
+# Hosts allowed configuration
+if DEBUG:
+    ALLOWED_HOSTS = ['*']
+else:
+    env_hosts = os.environ.get('DJANGO_ALLOWED_HOSTS')
+    ALLOWED_HOSTS = env_hosts.split(',') if env_hosts else ['*']
 
 
 # Application definition
@@ -76,10 +81,28 @@ WSGI_APPLICATION = 'second_hand_book.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASE_URL = os.environ.get('DATABASE_URL')
-DATABASES = {
-    'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600)
-}
+# Fetch database URL from environment
+raw_db_url = os.environ.get('DATABASE_URL')
+# Ensure it's a text string for dj_database_url.parse
+db_url = raw_db_url.decode('utf-8') if isinstance(raw_db_url, (bytes, bytearray)) else raw_db_url
+
+if db_url:
+    # Use provided DATABASE_URL, parsed by dj_database_url
+    DATABASES = {
+        'default': dj_database_url.parse(db_url, conn_max_age=600)
+    }
+else:
+    # Default to PostgreSQL local development
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ.get('PG_NAME', 'second_hand_book'),
+            'USER': os.environ.get('PG_USER', 'postgres'),
+            'PASSWORD': os.environ.get('PG_PASSWORD', ''),
+            'HOST': os.environ.get('PG_HOST', 'localhost'),
+            'PORT': os.environ.get('PG_PORT', '5432'),
+        }
+    }
 
 
 # Password validation

@@ -1,9 +1,19 @@
 {% extends "base.html" %}
 
-{% block title %}All Books | Second Hand Book{% endblock %}
+{% block title %}
+
+  All Books | Second Hand Book
+
+{% endblock %}
+
+{% block nav_heading %}
+  <span class="navbar-text ms-3">
+    <h1 class="mb-0">Second Hand Books</h1>
+  </span>
+{% endblock %}
 
 {% block content %}
-  <h1>All Books for Sale</h1>
+
   <ul>
   {% for book in books %}
     <li>
