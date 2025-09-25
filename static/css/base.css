@@ -1,0 +1,58 @@
+/* Base stylesheet for the Second Hand Book Shop */
+
+:root {
+  --color-primary: #6b4f4f;        /* Warm brown */
+  --color-secondary: #f5f1e8;      /* Soft parchment beige */
+  --color-accent: #8a9a5b;         /* Olive green accent */
+  --color-text: #333333;           /* Dark text on light background */
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-secondary);
+  color: var(--color-text);
+  font-family: 'Open Sans', sans-serif;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Merriweather', serif;
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+header, footer {
+  background: var(--color-primary);
+  color: var(--color-secondary);
+  padding: 1rem 0;
+  text-align: center;
+}
+
+.navbar, .navbar-nav .nav-link {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.container-fluid {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+main {
+  padding: 2rem;
+}
+
+footer p {
+  margin: 0;
+  font-size: 0.9rem;
+}
