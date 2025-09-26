@@ -53,7 +53,29 @@ header {
 
 footer {
   bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 }
+
+footer > * {
+  margin: 0 2rem;
+}
+
+footer a i {
+  color: var(--color-secondary);
+}
+
+footer p {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+footer a i:hover {
+  color: black;
+}
+
 
 .navbar, .navbar-nav .nav-link {
   font-family: 'Open Sans', sans-serif;
@@ -69,10 +91,7 @@ main {
   padding: 6rem 2rem 6rem;
 }
 
-footer p {
-  margin: 0;
-  font-size: 0.9rem;
-}
+
 
 .book-list-bg {
   position: fixed;
