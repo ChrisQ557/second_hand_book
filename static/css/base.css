@@ -10,7 +10,8 @@
 html, body {
   margin: 0;
   padding: 0;
-  background: var(--color-secondary);
+  /* Fixed full-page background */
+  background: var(--color-secondary) url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
   background-size: cover;
   color: var(--color-text);
   font-family: 'Open Sans', sans-serif;
@@ -94,11 +95,13 @@ main {
 
 
 .book-list-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1600&q=80');
-  background-size: cover;
+  /* Content wrapper - background is on <body> now */
+  position: relative;
+  padding: 2rem;
+  z-index: 1;
+}
+
+.white {
+  background: white;
+  width: 300px;
 }
