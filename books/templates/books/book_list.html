@@ -14,7 +14,8 @@
   <div class="row row-cols-1 row-cols-md-3 g-4">
     {% for book in books %}
     <div class="col">
-      <div class="card h-100">
+      <a href="{% url 'books:book_detail' slug=book.slug %}" class="text-decoration-none text-reset">
+        <div class="card h-100">
         {% if book.cover %}
         <img src="{{ book.cover.url }}" class="card-img-top" alt="Cover of {{ book.title }}">
         {% else %}
@@ -24,9 +25,9 @@
           <h5 class="card-title">{{ book.title }}</h5>
           <p class="card-text text-muted mb-2">by {{ book.author }}</p>
           <p class="card-text flex-grow-1">{{ book.description|truncatechars:100 }}</p>
-          <a href="{% url 'books:book_detail' slug=book.slug %}" class="btn btn-primary mt-3">View Details</a>
-        </div>
+                  </div>
       </div>
+      </a>
     </div>
     {% empty %}
     <div class="col">

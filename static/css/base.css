@@ -10,9 +10,9 @@
 html, body {
   margin: 0;
   padding: 0;
-  /* Fixed full-page background */
-  background: var(--color-secondary) url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
-  background-size: cover;
+  /* Default solid background for all pages */
+  background-color: var(--color-secondary);
+  background-image: none;
   color: var(--color-text);
   font-family: 'Open Sans', sans-serif;
   line-height: 1.6;
@@ -93,15 +93,58 @@ main {
 }
 
 
-
-.book-list-bg {
-  /* Content wrapper - background is on <body> now */
-  position: relative;
-  padding: 2rem;
-  z-index: 1;
-}
-
 .white {
   background: white;
   width: 300px;
+}
+
+body.book-detail-page {
+  background: var(--color-secondary) url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+  background-size: cover;
+}
+
+.book-list-bg .card {
+  max-width: 250px;
+  margin: 0 auto;
+}
+
+.book-list-bg .card-img-top {
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.book-detail-card {
+  max-width: 800px;
+  margin: 3rem auto;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.book-detail-img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto 1.5rem;
+  border-radius: 0.5rem;
+}
+
+.book-detail-card h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.book-detail-card p {
+  font-size: 1.125rem;
+  margin-bottom: 0.75rem;
+  color: var(--color-text);
+}
+
+.book-detail-card a.btn-secondary {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
 }
