@@ -14,28 +14,20 @@ from pathlib import Path
 import os
 import dj_database_url
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-o#bqje9rvpbx4lo&a8(h_=9h1w6@_^6#2mu$q&x@8_o34z1gf7'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DJANGO_DEBUG", "") != "False"
 
-# Hosts allowed configuration
 if DEBUG:
     ALLOWED_HOSTS = ['*']
 else:
     env_hosts = os.environ.get('DJANGO_ALLOWED_HOSTS')
     ALLOWED_HOSTS = env_hosts.split(',') if env_hosts else ['*']
-
-
-# Application definition
+    
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -91,7 +83,7 @@ ROOT_URLCONF = 'second_hand_book.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],  # project-level templates directory
+        'DIRS': [BASE_DIR / 'templates'],  
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

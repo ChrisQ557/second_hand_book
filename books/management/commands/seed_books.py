@@ -10,10 +10,13 @@ import urllib.request
 class Command(BaseCommand):
     help = "Seed the database with fake second-hand books."
 
+    def add_arguments(self, parser):
+        parser.add_argument('--count', type=int, default=30, help='Number of books to seed')
+
     def handle(self, *args, **options):
         fake = Faker()
 
-        for i in range(30):
+        for i in range(options['count']):
             title = fake.sentence(nb_words=5).rstrip('.')
             author = fake.name()
             isbn = fake.isbn13(separator="")
@@ -35,4 +38,4 @@ class Command(BaseCommand):
             with open(temp_path, 'rb') as img_file:
                 book.cover.save(f"cover_{i}.jpg", File(img_file), save=True)
 
-        self.stdout.write(self.style.SUCCESS("Seeded 30 books successfully."))
+        self.stdout.write(self.style.SUCCESS(f"Seeded {options['count']} books successfully."))
