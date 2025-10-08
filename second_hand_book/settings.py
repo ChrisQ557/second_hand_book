@@ -29,7 +29,7 @@ else:
     ALLOWED_HOSTS = env_hosts.split(',') if env_hosts else ['*']
 
 if not DEBUG:
-    ALLOWED_HOSTS.append('.herokuapp.com')
+    ALLOWED_HOSTS.append('.herokuapp.com', '127.0.0.1')
     
 
 INSTALLED_APPS = [
