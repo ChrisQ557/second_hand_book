@@ -27,6 +27,9 @@ if DEBUG:
 else:
     env_hosts = os.environ.get('DJANGO_ALLOWED_HOSTS')
     ALLOWED_HOSTS = env_hosts.split(',') if env_hosts else ['*']
+
+if not DEBUG:
+    ALLOWED_HOSTS.append('.herokuapp.com')
     
 
 INSTALLED_APPS = [
