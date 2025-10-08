@@ -1,5 +1,4 @@
 /* Base stylesheet for the Second Hand Book Shop */
-
 :root {
   --color-primary: #6b4f4f;        /* Warm brown */
   --color-secondary: #f5f1e8;      /* Soft parchment beige */
@@ -40,7 +39,7 @@ a:hover {
 header, footer {
   background: var(--color-primary);
   color: var(--color-secondary);
-  padding: 1rem 0;
+  padding: 0.5rem 0;
   text-align: center;
   position: fixed;
   width: 100%;
@@ -68,15 +67,14 @@ footer a i {
   color: var(--color-secondary);
 }
 
-footer p {
-  margin: 0;
-  font-size: 1.2rem;
-}
-
 footer a i:hover {
   color: black;
 }
 
+footer p {
+  margin: 0;
+  font-size: 1.2rem;
+}
 
 .navbar, .navbar-nav .nav-link {
   font-family: 'Open Sans', sans-serif;
@@ -89,31 +87,26 @@ footer a i:hover {
 
 main {
   flex: 1;
-  padding: 6rem 2rem 6rem;
+  /* add bottom padding equal to footer height to avoid overlap */
+  padding: 6rem 2rem 3rem;
+  overflow: auto;
 }
 
-
-.white {
-  background: white;
-  width: 300px;
-}
-
-body.book-detail-page {
-  background: var(--color-secondary) url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
-  background-size: cover;
+/* Book list spacing from navbar */
+.book-list-bg {
+  margin-top: 0;
+  padding-top: 1rem;
 }
 
 .book-list-bg .card {
-  /* Make cards fill their columns and rows */
+  /* total viewport minus header/footer (e.g. 6rem) divided by 2 rows */
+  height: calc((100vh - 6rem) / 2);
+  /* ensure width spans its grid column */
   width: 100%;
-  height: 100%;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
 }
 
 .book-list-bg .card-img-top {
-  aspect-ratio: 1 / 1;
+  height: 20vh;
   object-fit: cover;
 }
 
@@ -153,17 +146,22 @@ body.book-detail-page {
   font-size: 1rem;
 }
 
-/* Book list full-height grid to fit viewport */
-.book-list-bg {
-  min-height: calc(100vh - 12rem);
-}
 .book-list-bg .row {
-  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  height: auto;
 }
 .book-list-bg .col {
-  display: flex;
+  display: contents;
 }
-.book-list-bg .card {
-  flex: 1;
+@media (min-width: 576px) {
+  .book-list-bg .row {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
-
+@media (min-width: 768px) {
+  .book-list-bg .row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
