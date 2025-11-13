@@ -13,31 +13,23 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 import dj_database_url
-from dotenv import load_dotenv
 
-# Load environment variables from .env file
-load_dotenv()
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = 'django-insecure-o#bqje9rvpbx4lo&a8(h_=9h1w6@_^6#2mu$q&x@8_o34z1gf7'
 
-# A more standard way to handle the DEBUG flag from an environment variable
-DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
+DEBUG = os.environ.get("DJANGO_DEBUG", "") != "False"
 
 if DEBUG:
-    ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+    ALLOWED_HOSTS = ['*']
 else:
-    # In production, require the DJANGO_ALLOWED_HOSTS environment variable.
-    # Example: 'your-app-name.herokuapp.com,www.your-domain.com'
-    allowed_hosts_env = os.environ.get('DJANGO_ALLOWED_HOSTS')
-    if allowed_hosts_env:
-        ALLOWED_HOSTS = allowed_hosts_env.split(',')
-    else:
-        ALLOWED_HOSTS = []
+    env_hosts = os.environ.get('DJANGO_ALLOWED_HOSTS')
+    ALLOWED_HOSTS = env_hosts.split(',') if env_hosts else ['*']
+
+if not DEBUG:
+    ALLOWED_HOSTS += ['.herokuapp.com', '127.0.0.1']
     
 
 INSTALLED_APPS = [
@@ -47,16 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_summernote',
+    'books',
     'django.contrib.sites',
-
-    # Third-party apps
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'django_summernote',
-
-    # Local apps
-    'books',
 ]
 
 SITE_ID = 1
@@ -70,6 +58,13 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 ACCOUNT_LOGIN_METHODS = {'username', 'email'}
+ACCOUNT_SIGNUP_FIELDS = [
+    'email*',
+    'email2*',
+    'username*',
+    'password1*',
+    'password2*',
+]
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_USERNAME_MIN_LENGTH = 4
 LOGIN_URL = '/accounts/login/'
@@ -82,9 +77,9 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'allauth.account.middleware.AccountMiddleware', 
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'second_hand_book.urls'
@@ -111,13 +106,28 @@ WSGI_APPLICATION = 'second_hand_book.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': dj_database_url.config(
-        # Fallback to a local SQLite database if DATABASE_URL is not set
-        default=f'sqlite:///{BASE_DIR / "db.sqlite3"}',
-        conn_max_age=600
-    )
-}
+# Fetch database URL from environment
+raw_db_url = os.environ.get('DATABASE_URL')
+# Ensure it's a text string for dj_database_url.parse
+db_url = raw_db_url.decode('utf-8') if isinstance(raw_db_url, (bytes, bytearray)) else raw_db_url
+
+if db_url:
+    # Use provided DATABASE_URL, parsed by dj_database_url
+    DATABASES = {
+        'default': dj_database_url.parse(db_url, conn_max_age=600)
+    }
+else:
+    # Default to PostgreSQL local development
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ.get('PG_NAME', 'second_hand_book'),
+            'USER': os.environ.get('PG_USER', 'postgres'),
+            'PASSWORD': os.environ.get('PG_PASSWORD', ''),
+            'HOST': os.environ.get('PG_HOST', 'localhost'),
+            'PORT': os.environ.get('PG_PORT', '5432'),
+        }
+    }
 
 
 # Password validation

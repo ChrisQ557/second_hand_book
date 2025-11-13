@@ -4,7 +4,9 @@
 
 {% block nav_heading %}
   <span class="navbar-text ms-3">
-    <a href="{% url 'books:book_list' %}"><h1 class="mb-0"><i class="fas fa-book me-5"></i>SECOND HAND BOOKS</h1></a>
+    <h1 class="mb-0">
+      <a href="{% url 'books:book_list' %}" class="text-decoration-none text-reset"><i class="fas fa-book me-5"></i>SECOND HAND BOOKS</a>
+    </h1>
   </span>
 {% endblock %}
 
@@ -25,4 +27,3 @@
 {% endblock %}
 
  
-
