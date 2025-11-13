@@ -6,6 +6,11 @@
   --color-text: #333333;           /* Dark text on light background */
 }
 
+html {
+  overflow-y: scroll;
+}
+
+
 html, body {
   margin: 0;
   padding: 0;
@@ -88,14 +93,13 @@ footer p {
 main {
   flex: 1;
   /* add bottom padding equal to footer height to avoid overlap */
-  padding: 6rem 2rem 3rem;
+  padding: 7rem 2rem 3rem;
   overflow: auto;
 }
 
 /* Book list spacing from navbar */
 .book-list-bg {
   margin-top: 0;
-  padding-top: 1rem;
 }
 
 .book-list-bg .card {

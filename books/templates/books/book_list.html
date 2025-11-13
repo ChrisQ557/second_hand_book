@@ -5,12 +5,16 @@
 
 {% block nav_heading %}
 <span class="navbar-text ms-3">
-  <h1 class="mb-0"><i class="fas fa-book me-5"></i>SECOND HAND BOOKS</h1>
+  <h1 class="mb-0">
+    <a href="{% url 'books:book_list' %}" class="text-decoration-none text-reset mb-0 display-4"><i class="fas fa-book me-5"></i>SECOND HAND BOOKS</a>
+  </h1>
 </span>
 {% endblock %}
 
+{% block body_class %}book-list-bg{% endblock %}
+
 {% block content %}
-<div class="book-list-bg container py-4">
+<div class="container py-4">
   <div class="row row-cols-1 row-cols-md-3 g-4">
     {% for book in page_obj %}
     <div class="col">

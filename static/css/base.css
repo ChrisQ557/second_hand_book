@@ -6,6 +6,11 @@
   --color-text: #333333;           /* Dark text on light background */
 }
 
+/* Reserve vertical scrollbar space to prevent layout shift between pages */
+html {
+  overflow-y: scroll;
+}
+
 html, body {
   margin: 0;
   padding: 0;
@@ -80,9 +85,27 @@ footer p {
   font-family: 'Open Sans', sans-serif;
 }
 
+/* Stabilize navbar height and heading to avoid layout shift */
+.navbar {
+  min-height: 64px;
+}
+.navbar .navbar-text h1 {
+  font-size: 1.5rem;
+  line-height: 1;
+  margin: 0;
+  white-space: nowrap;
+}
+/* Reserve icon width to avoid reflow when icon font loads */
+.navbar .navbar-text i.fas.fa-book {
+  display: inline-block;
+  width: 1.25em;
+  text-align: center;
+}
+
 .container-fluid {
   max-width: 1200px;
   margin: 0 auto;
+  align-items: center;
 }
 
 main {
