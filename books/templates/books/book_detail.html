@@ -2,28 +2,38 @@
 
 {% block title %}{{ book.title }} | Second Hand Book{% endblock %}
 
-{% block nav_heading %}
-  <span class="navbar-text ms-3">
-    <h1 class="mb-0">
-      <a href="{% url 'books:book_list' %}" class="text-decoration-none text-reset display-4"><i class="fas fa-book me-5"></i>SECOND HAND BOOKS</a>
-    </h1>
-  </span>
-{% endblock %}
+{% block nav_heading %}{% endblock %}
 
 {% block body_class %}book-detail-page{% endblock %}
 
 {% block content %}
-<div class="book-detail-card">
-    {% if book.cover %}
-      <img src="{{ book.cover.url }}" class="book-detail-img" alt="Cover of {{ book.title }}">
-    {% endif %}
-    <h1 >{{ book.title }}</h1>
-    <p><strong>Author:</strong> {{ book.author }}</p>
-    <p><strong>Published Date:</strong> {{ book.published_date }}</p>
-    <p><strong>ISBN:</strong> {{ book.isbn }}</p>
-    <p><strong>Description:</strong> {{ book.description|safe }}</p>
-    <a href="{% url 'books:book_list' %}" class="btn btn-secondary">Back to all books</a>
+<div class="container mt-4">
+  <div class="card mb-3 shadow-sm">
+    <div class="row g-0">
+      <div class="col-md-5">
+        {% if book.cover %}
+          <img src="{{ book.cover.url }}" class="img-fluid rounded-start" alt="Cover of {{ book.title }}">
+        {% else %}
+          <!-- A placeholder image if no cover is available -->
+          <img src="https://via.placeholder.com/400x600.png?text=No+Image" class="img-fluid rounded-start" alt="No cover image available">
+        {% endif %}
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h1 class="card-title">{{ book.title }}</h1>
+          <h5 class="card-subtitle mb-3 text-muted">By {{ book.author }}</h5>
+          <div class="d-flex gap-3 mb-2">
+            <span class="badge bg-light text-secondary border">{{ book.published_date }}</span>
+            <span class="badge bg-light text-secondary border">ISBN {{ book.isbn }}</span>
+          </div>
+          <hr>
+          <div class="card-text">{{ book.description|safe }}</div>
+          <a href="{% url 'books:book_list' %}" class="btn btn-outline-primary mt-3"><i class="fas fa-arrow-left me-2"></i>Back to all books</a>
+        </div>
+      </div>
+    </div>
   </div>
+</div>
 {% endblock %}
 
  

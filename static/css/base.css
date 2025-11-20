@@ -1,9 +1,12 @@
 /* Base stylesheet for the Second Hand Book Shop */
 :root {
   --color-primary: #6b4f4f;        /* Warm brown */
-  --color-secondary: #f5f1e8;      /* Soft parchment beige */
-  --color-accent: #8a9a5b;         /* Olive green accent */
-  --color-text: #333333;           /* Dark text on light background */
+  --color-secondary: #fbfaf7;      /* Softer parchment */
+  --color-accent: #6c9a8b;         /* Muted teal accent */
+  --color-text: #2b2b2b;           /* Dark text on light background */
+  --color-muted: #6c757d;
+  --color-card: #ffffff;
+  --shadow-sm: 0 6px 16px rgba(0,0,0,.06);
 }
 
 /* Reserve vertical scrollbar space to prevent layout shift between pages */
@@ -41,12 +44,17 @@ a:hover {
   text-decoration: underline;
 }
 
-header, footer {
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+}
+
+footer {
   background: var(--color-primary);
   color: var(--color-secondary);
-  padding: 0.5rem 0;
+  padding: 0.75rem 0;
   text-align: center;
-  position: fixed;
   width: 100%;
   left: 0;
   z-index: 1000;
@@ -102,17 +110,13 @@ footer p {
   text-align: center;
 }
 
-.container-fluid {
-  max-width: 1200px;
-  margin: 0 auto;
-  align-items: center;
+.container {
+  max-width: 1140px;
 }
 
-main {
+.page-main {
   flex: 1;
-  /* add bottom padding equal to footer height to avoid overlap */
-  padding: 6rem 2rem 3rem;
-  overflow: auto;
+  padding: 2rem 1rem 3rem;
 }
 
 /* Book list spacing from navbar */
@@ -121,15 +125,18 @@ main {
   padding-top: 1rem;
 }
 
-.book-list-bg .card {
-  /* total viewport minus header/footer (e.g. 6rem) divided by 2 rows */
-  height: calc((100vh - 6rem) / 2);
-  /* ensure width spans its grid column */
-  width: 100%;
+.book-card {
+  border: 1px solid rgba(0,0,0,.05);
+  transition: transform .15s ease, box-shadow .15s ease;
+  background: var(--color-card);
+}
+.book-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
 }
 
-.book-list-bg .card-img-top {
-  height: 20vh;
+.book-cover {
+  height: 220px;
   object-fit: cover;
 }
 
@@ -170,21 +177,11 @@ main {
 }
 
 .book-list-bg .row {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
   height: auto;
 }
-.book-list-bg .col {
-  display: contents;
-}
 @media (min-width: 576px) {
-  .book-list-bg .row {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .book-cover { height: 240px; }
 }
 @media (min-width: 768px) {
-  .book-list-bg .row {
-    grid-template-columns: repeat(3, 1fr);
-  }
+  .book-cover { height: 260px; }
 }
