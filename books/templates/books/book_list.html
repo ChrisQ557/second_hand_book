@@ -14,64 +14,77 @@
     <div>
       <h1 class="h3 mb-1">Discover pre-loved books</h1>
       <p class="text-muted mb-0">Browse by title, author, or simply explore the covers.</p>
+      {% if request.GET.q %}
+      <p class="mt-2"><span class="badge text-bg-light">Results for “{{ request.GET.q }}”</span></p>
+      {% endif %}
     </div>
   </div>
-  <div class="row row-cols-1 row-cols-md-3 g-4">
-    {% for book in page_obj %}
-    <div class="col">
-      <a href="{% url 'books:book_detail' slug=book.slug %}" class="text-decoration-none text-reset">
-        <div class="card h-100 shadow-sm book-card">
-        {% if book.cover %}
-        <img src="{{ book.cover.url }}" class="card-img-top book-cover" alt="Cover of {{ book.title }}">
-        {% else %}
-        <img src="{% static 'images/placeholder.png' %}" class="card-img-top book-cover" alt="No cover available">
-        {% endif %}
-        <div class="card-body d-flex flex-column">
-          <h5 class="card-title text-truncate" title="{{ book.title }}">{{ book.title }}</h5>
-          <p class="card-text text-muted mb-2 text-truncate" title="{{ book.author }}">by {{ book.author }}</p>
-          <p class="card-text flex-grow-1">{{ book.description|truncatechars:100 }}</p>
-          <div class="mt-2 d-flex align-items-center justify-content-between">
-            <span class="badge bg-light text-secondary border">{{ book.published_date }}</span>
-            <span class="small text-muted">ISBN {{ book.isbn }}</span>
-          </div>
-        </div>
-      </div>
-      </a>
-    </div>
-    {% empty %}
-    <div class="col">
-      <p class="text-center">No books available.</p>
-    </div>
-    {% endfor %}
+  <div id="book-grid" class="row row-cols-1 row-cols-md-3 g-4">
+    {% include 'books/partials/_book_cards.html' %}
   </div>
-  <nav aria-label="Page navigation">
-    <ul class="pagination justify-content-center mt-4">
-      {% if page_obj.has_previous %}
-        <li class="page-item">
-          <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
-        </li>
-      {% else %}
-        <li class="page-item disabled">
-          <span class="page-link">Previous</span>
-        </li>
-      {% endif %}
-      {% for num in page_obj.paginator.page_range %}
-        {% if page_obj.number == num %}
-          <li class="page-item active"><span class="page-link">{{ num }}</span></li>
-        {% else %}
-          <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
-        {% endif %}
-      {% endfor %}
-      {% if page_obj.has_next %}
-        <li class="page-item">
-          <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
-        </li>
-      {% else %}
-        <li class="page-item disabled">
-          <span class="page-link">Next</span>
-        </li>
-      {% endif %}
-    </ul>
-  </nav>
+
+  <div id="infinite-loader" class="text-center my-4" {% if not has_next %}style="display:none"{% endif %}>
+    <div class="spinner-border text-secondary" role="status" aria-hidden="true"></div>
+    <div class="mt-2 text-muted small">Loading more books…</div>
+  </div>
+
+  <div id="sentinel" class="py-1"></div>
 </div>
+
+<script>
+(() => {
+  const grid = document.getElementById('book-grid');
+  const loader = document.getElementById('infinite-loader');
+  const sentinel = document.getElementById('sentinel');
+
+  let page = {{ page_obj.number|default:1 }};
+  let hasNext = {{ has_next|yesno:'true,false' }};
+  const q = new URLSearchParams(window.location.search).get('q') || '';
+  let loading = false;
+
+  function loadNext() {
+    if (!hasNext || loading) return;
+    loading = true;
+    loader.style.display = '';
+
+    const params = new URLSearchParams();
+    params.set('page', String(page + 1));
+    if (q) params.set('q', q);
+    params.set('load', '1');
+
+    fetch(`${window.location.pathname}?${params.toString()}`, {
+      headers: { 'X-Requested-With': 'XMLHttpRequest' }
+    })
+      .then(res => {
+        if (!res.ok) throw new Error('Network response was not ok');
+        return res.text();
+      })
+      .then(html => {
+        if (!html.trim()) {
+          hasNext = false;
+          loader.style.display = 'none';
+          return;
+        }
+        const temp = document.createElement('div');
+        temp.innerHTML = html;
+        const nodes = temp.querySelectorAll('.col');
+        nodes.forEach(n => grid.appendChild(n));
+        page += 1;
+        // We need to know if more pages exist; infer from length vs page size if needed
+        hasNext = html.trim().length > 0; // server returns empty when no results
+        if (!hasNext) loader.style.display = 'none';
+      })
+      .catch(() => { loader.style.display = 'none'; })
+      .finally(() => { loading = false; });
+  }
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) loadNext();
+    });
+  }, { rootMargin: '400px 0px' });
+
+  if (hasNext) io.observe(sentinel);
+})();
+</script>
 {% endblock %}

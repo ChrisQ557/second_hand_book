@@ -18,7 +18,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-o#bqje9rvpbx4lo&a8(h_=9h1w6@_^6#2mu$q&x@8_o34z1gf7'
+# Load secret key from environment; provide a dev fallback only when DEBUG is true
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY') or (
+    'dev-only-unsafe-secret-key' if os.environ.get("DJANGO_DEBUG", "") != "False" else None
+)
+if not SECRET_KEY:
+    raise RuntimeError('DJANGO_SECRET_KEY must be set in production')
 
 DEBUG = os.environ.get("DJANGO_DEBUG", "") != "False"
 
@@ -159,6 +164,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Ensure Django knows to serve media in development via urls.py configuration
+# In production, serve media from an external storage or web server.
 
 # Enable WhiteNoise static file serving
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

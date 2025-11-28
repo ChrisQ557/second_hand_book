@@ -42,8 +42,8 @@
                         <li class="nav-item"><a class="nav-link" href="#">Author</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">Language</a></li>
                         <li class="nav-item ms-lg-3">
-                            <form class="d-flex" role="search">
-                                <input class="form-control form-control-sm me-2" type="search" placeholder="Search books" aria-label="Search">
+                            <form class="d-flex" role="search" method="get" action="{% url 'books:book_list' %}">
+                                <input class="form-control form-control-sm me-2" name="q" type="search" placeholder="Search books" aria-label="Search" value="{{ request.GET.q|default_if_none:'' }}">
                                 <button class="btn btn-sm btn-outline-primary" type="submit">Search</button>
                             </form>
                         </li>
