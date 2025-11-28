@@ -9,7 +9,7 @@
 {% block body_class %}book-list-bg{% endblock %}
 
 {% block content %}
-<div class="container py-4">
+<div class="container-fluid py-4">
   <div class="d-flex align-items-center justify-content-between mb-4">
     <div>
       <h1 class="h3 mb-1">Discover pre-loved books</h1>
@@ -19,7 +19,7 @@
       {% endif %}
     </div>
   </div>
-  <div id="book-grid" class="row row-cols-1 row-cols-md-3 g-4">
+  <div id="book-grid" class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-3 g-lg-4">
     {% include 'books/partials/_book_cards.html' %}
   </div>
 
