@@ -144,13 +144,23 @@ footer p {
   object-fit: cover;
 }
 
+.book-detail-page {
+  /* Background image for detail pages */
+  background-color: #f5f1e8; /* fallback */
+  background-image: url('../images/dmitrij-paskevic-YjVa-F9P9kk-unsplash.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
 .book-detail-card {
-  max-width: 800px;
+  max-width: 1100px;
   margin: 3rem auto;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.92);
   padding: 2rem;
   border-radius: 0.5rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
   text-align: left;
 }
 
