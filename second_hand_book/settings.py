@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django_summernote',
     'books',
     'cart',
+    'checkout',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
