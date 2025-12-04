@@ -2,12 +2,23 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.db.models import Q
 from django.template.loader import render_to_string
+from django.shortcuts import redirect
 from .models import Book
 from django.core.paginator import Paginator
 
 
 def home(request):
     return render(request, "home.html")
+
+
+def add_to_bag(request, slug):
+    if request.method != 'POST':
+        return redirect('books:book_detail', slug=slug)
+    # Initialize and increment session cart_count
+    count = request.session.get('cart_count', 0)
+    request.session['cart_count'] = count + 1
+    request.session.modified = True
+    return redirect('books:book_detail', slug=slug)
 
 # Create your views here.
 def book_detail(request,slug):
