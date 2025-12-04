@@ -8,17 +8,17 @@
 
 {% block content %}
 <div class="container mt-4">
-  <div class="card mb-3 shadow-sm">
+  <div class="card mb-3 shadow-sm book-detail-card">
     <div class="row g-0">
       <div class="col-md-5">
         {% if book.cover %}
-          <img src="{{ book.cover.url }}" class="img-fluid rounded-start" alt="Cover of {{ book.title }}">
+          <img src="{{ book.cover.url }}" class="img-fluid rounded-start book-detail-img" alt="Cover of {{ book.title }}">
         {% else %}
           <!-- A placeholder image if no cover is available -->
-          <img src="https://via.placeholder.com/400x600.png?text=No+Image" class="img-fluid rounded-start" alt="No cover image available">
+          <img src="https://via.placeholder.com/400x600.png?text=No+Image" class="img-fluid rounded-start book-detail-img" alt="No cover image available">
         {% endif %}
       </div>
-      <div class="col-md-8">
+      <div class="col-md-7">
         <div class="card-body">
           <h1 class="card-title">{{ book.title }}</h1>
           <h5 class="card-subtitle mb-3 text-muted">By {{ book.author }}</h5>
@@ -27,7 +27,7 @@
             <span class="badge bg-light text-secondary border">ISBN {{ book.isbn }}</span>
           </div>
           <hr>
-          <div class="card-text">{{ book.description|safe }}</div>
+          <div class="card-text">{{ book.description }}</div>
           <a href="{% url 'books:book_list' %}" class="btn btn-outline-primary mt-3"><i class="fas fa-arrow-left me-2"></i>Back to all books</a>
         </div>
       </div>

@@ -23,8 +23,7 @@ html, body {
   color: var(--color-text);
   font-family: 'Open Sans', sans-serif;
   line-height: 1.6;
-  display: flex;
-  flex-direction: column;
+  /* Root elements in normal flow */
   min-height: 100vh;
 }
 
@@ -48,6 +47,13 @@ header {
   position: sticky;
   top: 0;
   z-index: 1020;
+}
+
+/* Sticky footer layout using CSS Grid */
+body {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
 }
 
 footer {
@@ -97,6 +103,11 @@ footer p {
 .navbar {
   min-height: 64px;
 }
+/* Stabilize brand text width to reduce flicker on font swap */
+.navbar-brand span {
+  display: inline-block;
+  min-width: 8ch;
+}
 .navbar .navbar-text h1 {
   font-size: 1.5rem;
   line-height: 1;
@@ -104,7 +115,7 @@ footer p {
   white-space: nowrap;
 }
 /* Reserve icon width to avoid reflow when icon font loads */
-.navbar .navbar-text i.fas.fa-book {
+.navbar .navbar-brand i.fas.fa-book-open {
   display: inline-block;
   width: 1.25em;
   text-align: center;
@@ -115,14 +126,13 @@ footer p {
 }
 
 .page-main {
-  flex: 1;
   padding: 2rem 1rem 3rem;
 }
 
 /* Book list spacing from navbar */
 .book-list-bg {
   margin-top: 0;
-  padding-top: 1rem;
+  padding-top: 0; /* unify top spacing across pages; rely on .page-main */
   /* Contrasting subtle background to make covers pop */
   background: linear-gradient(180deg, #f2efe9 0%, #ece7df 100%);
 }
@@ -157,11 +167,39 @@ footer p {
 .book-detail-card {
   max-width: 1100px;
   margin: 3rem auto;
-  background: rgba(255, 255, 255, 0.92);
-  padding: 2rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  /* Glassmorphism: subtle translucent card with blur */
+  background: rgba(255, 255, 255, 0.16);
+  backdrop-filter: saturate(140%) blur(10px);
+  -webkit-backdrop-filter: saturate(140%) blur(10px);
+  padding: 0; /* we'll pad card-body to keep solid background behind text */
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
   text-align: left;
+}
+
+/* Ensure text has solid background for readability inside glass card */
+.book-detail-card .card-body {
+  background: rgba(255, 255, 255, 0.96);
+  padding: 2rem;
+  border-top-right-radius: 0.75rem;
+  border-bottom-right-radius: 0.75rem;
+}
+
+/* Add subtle chips behind badges and metadata */
+.book-detail-card .badge,
+.book-detail-card .card-subtitle,
+.book-detail-card .card-text,
+.book-detail-card .card-title {
+  background-color: rgba(255, 255, 255, 1);
+}
+
+/* Improve contrast for paragraph text on any background */
+.book-detail-card .card-text,
+.book-detail-card .card-subtitle,
+.book-detail-card .small,
+.book-detail-card p {
+  color: #222;
 }
 
 .book-detail-img {

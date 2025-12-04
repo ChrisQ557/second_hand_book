@@ -5,6 +5,10 @@ from django.template.loader import render_to_string
 from .models import Book
 from django.core.paginator import Paginator
 
+
+def home(request):
+    return render(request, "home.html")
+
 # Create your views here.
 def book_detail(request,slug):
     book = get_object_or_404(Book, slug=slug)
