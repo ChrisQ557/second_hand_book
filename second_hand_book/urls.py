@@ -11,7 +11,8 @@ urlpatterns = [
     path('summernote/', include('django_summernote.urls')),
     path('accounts/', include('allauth.urls')),
     path('', home, name='home'),
-    path('', include('books.urls', namespace='books')),
+    path('books/', include('books.urls', namespace='books')),
+    path('cart/', include('cart.urls', namespace='cart')),
 ]
 
 if settings.DEBUG:
