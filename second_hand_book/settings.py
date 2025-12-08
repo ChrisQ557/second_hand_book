@@ -122,7 +122,7 @@ db_url = raw_db_url.decode('utf-8') if isinstance(raw_db_url, (bytes, bytearray)
 if db_url:
     # Use provided DATABASE_URL, parsed by dj_database_url
     DATABASES = {
-        'default': dj_database_url.parse(db_url, conn_max_age=600)
+        'default': dj_database_url.parse(db_url, conn_max_age=600, ssl_require=True)
     }
 else:
     # Default to PostgreSQL local development
