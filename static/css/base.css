@@ -129,6 +129,48 @@ footer p {
   padding: 2rem 1rem 3rem;
 }
 
+/* Auth pages */
+.auth-page {
+  max-width: 640px !important; /* unify width */
+}
+.auth-page h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+.auth-card {
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 10px;
+  padding: 28px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+}
+.auth-page form .form-label {
+  font-weight: 600;
+}
+.auth-page form input[type="text"],
+.auth-page form input[type="email"],
+.auth-page form input[type="password"],
+.auth-page form input[type="checkbox"] {
+  /* Fall back styling even without Bootstrap classes */
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+}
+.auth-page form input:focus {
+  outline: none;
+  border-color: #86b7fe;
+  box-shadow: 0 0 0 0.2rem rgba(13,110,253,.15);
+}
+.auth-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.auth-meta {
+  color: #6c757d;
+  font-size: 0.95rem;
+}
+
 /* Book list spacing from navbar */
 .book-list-bg {
   margin-top: 0;
