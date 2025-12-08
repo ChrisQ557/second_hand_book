@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load i18n widget_tweaks %}
+
+{% block title %}{% trans "Sign in — Second Hand Book" %}{% endblock %}
+
+{% block content %}
+<div class="container py-5" style="max-width: 600px;">
+  <h1 class="mb-4">{% trans "Sign in" %}</h1>
+
+  {% if form.non_field_errors %}
+    <div class="alert alert-danger" role="alert">
+      {{ form.non_field_errors }}
+    </div>
+  {% endif %}
+
+  <form method="post" action="{% url 'account_login' %}">
+    {% csrf_token %}
+
+    {# Render fields with Bootstrap classes #}
+    <div class="mb-3">
+      <label for="id_login" class="form-label">{% trans "Email or Username" %}</label>
+      {{ form.login|add_class:"form-control" }}
+      {% if form.login.errors %}
+        <div class="text-danger small">{{ form.login.errors|striptags }}</div>
+      {% endif %}
+    </div>
+
+    <div class="mb-3">
+      <label for="id_password" class="form-label">{% trans "Password" %}</label>
+      {{ form.password|add_class:"form-control" }}
+      {% if form.password.errors %}
+        <div class="text-danger small">{{ form.password.errors|striptags }}</div>
+      {% endif %}
+    </div>
+
+    {% if form.remember %}
+      <div class="form-check mb-3">
+        {{ form.remember|add_class:"form-check-input" }}
+        <label class="form-check-label" for="id_remember">{% trans "Remember me" %}</label>
+      </div>
+    {% endif %}
+
+    <div class="d-flex align-items-center gap-3">
+      <button type="submit" class="btn btn-primary">{% trans "Sign in" %}</button>
+      <a class="btn btn-link" href="{% url 'account_reset_password' %}">{% trans "Forgot password?" %}</a>
+    </div>
+  </form>
+
+  <hr class="my-4">
+  <p class="mb-0">{% trans "New here?" %} <a href="{% url 'account_signup' %}">{% trans "Create an account" %}</a></p>
+</div>
+{% endblock %}
