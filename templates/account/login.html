@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n widget_tweaks %}
+{% load i18n %}
 
 {% block title %}{% trans "Sign in — Second Hand Book" %}{% endblock %}
 
@@ -19,7 +19,7 @@
     {# Render fields with Bootstrap classes #}
     <div class="mb-3">
       <label for="id_login" class="form-label">{% trans "Email or Username" %}</label>
-      {{ form.login|add_class:"form-control" }}
+      {{ form.login }}
       {% if form.login.errors %}
         <div class="text-danger small">{{ form.login.errors|striptags }}</div>
       {% endif %}
@@ -27,7 +27,7 @@
 
     <div class="mb-3">
       <label for="id_password" class="form-label">{% trans "Password" %}</label>
-      {{ form.password|add_class:"form-control" }}
+      {{ form.password }}
       {% if form.password.errors %}
         <div class="text-danger small">{{ form.password.errors|striptags }}</div>
       {% endif %}
@@ -35,7 +35,7 @@
 
     {% if form.remember %}
       <div class="form-check mb-3">
-        {{ form.remember|add_class:"form-check-input" }}
+        {{ form.remember }}
         <label class="form-check-label" for="id_remember">{% trans "Remember me" %}</label>
       </div>
     {% endif %}
