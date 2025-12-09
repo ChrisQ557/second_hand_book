@@ -199,7 +199,7 @@ footer p {
 .book-detail-page {
   /* Background image for detail pages */
   background-color: #f5f1e8; /* fallback */
-  background-image: url('../images/dmitrij-paskevic-YjVa-F9P9kk-unsplash.jpg');
+  background-image: url("../images/dmitrij-paskevic-YjVa-F9P9kk-unsplash.ca8fe1f59d56.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
