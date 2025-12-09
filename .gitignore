@@ -17,4 +17,4 @@ db.sqlite3
 .DS_Store
 
 # Environment variables
-.env
+.envstaticfiles/
