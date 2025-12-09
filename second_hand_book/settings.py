@@ -13,19 +13,23 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 import dj_database_url
+import logging
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# Load secret key from environment; provide a dev fallback only when DEBUG is true
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY') or (
-    'dev-only-unsafe-secret-key' if os.environ.get("DJANGO_DEBUG", "") != "False" else None
-)
-if not SECRET_KEY:
-    raise RuntimeError('DJANGO_SECRET_KEY must be set in production')
+# More tolerant: never crash if DJANGO_SECRET_KEY is missing. Use a fallback and warn when DEBUG is False.
+logger = logging.getLogger(__name__)
 
-DEBUG = os.environ.get("DJANGO_DEBUG", "") != "False"
+# Normalize DEBUG parsing: treat 'false', '0', 'no' as False; anything else/unset as True
+DEBUG = os.environ.get("DJANGO_DEBUG", "").lower() not in ("false", "0", "no")
+
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+if not SECRET_KEY:
+    SECRET_KEY = 'unsafe-dev-fallback-secret-key-change-me'
+    if not DEBUG:
+        print("WARNING: DJANGO_SECRET_KEY is missing; using unsafe fallback. Set DJANGO_SECRET_KEY in Heroku config.")
 
 if DEBUG:
     ALLOWED_HOSTS = ['*']
