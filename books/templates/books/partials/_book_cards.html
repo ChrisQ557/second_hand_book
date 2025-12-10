@@ -3,7 +3,9 @@
   <div class="col">
     <a href="{% url 'books:book_detail' slug=book.slug %}" class="text-decoration-none text-reset">
       <div class="card h-100 shadow-sm book-card">
-        {% if book.cover %}
+        {% if book.cover_path %}
+          <img src="{% static book.cover_path %}" class="card-img-top book-cover" alt="Cover of {{ book.title }}">
+        {% elif book.cover %}
           <img src="{{ book.cover.url }}" class="card-img-top book-cover" alt="Cover of {{ book.title }}">
         {% else %}
           <img src="{% static 'images/placeholder.png' %}" class="card-img-top book-cover" alt="No cover available">
@@ -15,6 +17,10 @@
           <div class="mt-2 d-flex align-items-center justify-content-between">
             <span class="badge bg-light text-secondary border">{{ book.published_date }}</span>
             <span class="small text-muted">ISBN {{ book.isbn }}</span>
+          </div>
+          <div class="mt-2 d-flex align-items-center justify-content-between">
+            <span class="fw-semibold">{{ book.price }} $</span>
+            <span class="badge bg-secondary">{{ book.get_language_display }}</span>
           </div>
         </div>
       </div>

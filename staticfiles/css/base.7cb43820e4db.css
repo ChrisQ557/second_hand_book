@@ -1,0 +1,281 @@
+/* Base stylesheet for the Second Hand Book Shop */
+:root {
+  --color-primary: #6b4f4f;        /* Warm brown */
+  --color-secondary: #fbfaf7;      /* Softer parchment */
+  --color-accent: #6c9a8b;         /* Muted teal accent */
+  --color-text: #2b2b2b;           /* Dark text on light background */
+  --color-muted: #6c757d;
+  --color-card: #ffffff;
+  --shadow-sm: 0 6px 16px rgba(0,0,0,.06);
+}
+
+/* Reserve vertical scrollbar space to prevent layout shift between pages */
+html {
+  overflow-y: scroll;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  /* Default solid background for all pages */
+  background-color: var(--color-secondary);
+  background-image: none;
+  color: var(--color-text);
+  font-family: 'Open Sans', sans-serif;
+  line-height: 1.6;
+  /* Root elements in normal flow */
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Merriweather', serif;
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+}
+
+/* Sticky footer layout using CSS Grid */
+body {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+footer {
+  background: var(--color-primary);
+  color: var(--color-secondary);
+  padding: 0.75rem 0;
+  text-align: center;
+  width: 100%;
+  left: 0;
+  z-index: 1000;
+}
+
+header {
+  top: 0;
+}
+
+footer {
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+footer > * {
+  margin: 0 2rem;
+}
+
+footer a i {
+  color: var(--color-secondary);
+}
+
+footer a i:hover {
+  color: black;
+}
+
+footer p {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.navbar, .navbar-nav .nav-link {
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* Stabilize navbar height and heading to avoid layout shift */
+.navbar {
+  min-height: 64px;
+}
+/* Stabilize brand text width to reduce flicker on font swap */
+.navbar-brand span {
+  display: inline-block;
+  min-width: 8ch;
+}
+.navbar .navbar-text h1 {
+  font-size: 1.5rem;
+  line-height: 1;
+  margin: 0;
+  white-space: nowrap;
+}
+/* Reserve icon width to avoid reflow when icon font loads */
+.navbar .navbar-brand i.fas.fa-book-open {
+  display: inline-block;
+  width: 1.25em;
+  text-align: center;
+}
+
+.container {
+  max-width: 1140px;
+}
+
+.page-main {
+  padding: 2rem 1rem 3rem;
+}
+
+/* Auth pages */
+.auth-page {
+  max-width: 640px !important; /* unify width */
+}
+.auth-page h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+.auth-card {
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 10px;
+  padding: 28px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+}
+.auth-page form .form-label {
+  font-weight: 600;
+}
+.auth-page form input[type="text"],
+.auth-page form input[type="email"],
+.auth-page form input[type="password"],
+.auth-page form input[type="checkbox"] {
+  /* Fall back styling even without Bootstrap classes */
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+}
+.auth-page form input:focus {
+  outline: none;
+  border-color: #86b7fe;
+  box-shadow: 0 0 0 0.2rem rgba(13,110,253,.15);
+}
+.auth-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.auth-meta {
+  color: #6c757d;
+  font-size: 0.95rem;
+}
+
+/* Book list spacing from navbar */
+.book-list-bg {
+  margin-top: 0;
+  padding-top: 0; /* unify top spacing across pages; rely on .page-main */
+  /* Contrasting subtle background to make covers pop */
+  background: linear-gradient(180deg, #f2efe9 0%, #ece7df 100%);
+}
+
+.book-card {
+  border: 1px solid rgba(107, 79, 79, 0.2); /* subtle warm border */
+  box-shadow: 0 1px 2px rgba(0,0,0,.03);
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+  background: var(--color-card);
+}
+.book-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+  border-color: rgba(107, 79, 79, 0.35);
+}
+
+.book-cover {
+  height: 220px;
+  object-fit: cover;
+}
+
+.book-detail-page {
+  /* Background image for detail pages */
+  background-color: #f5f1e8; /* fallback */
+  background-image: url("../images/dmitrij-paskevic-YjVa-F9P9kk-unsplash.ca8fe1f59d56.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.book-detail-card {
+  max-width: 1100px;
+  margin: 3rem auto;
+  /* Glassmorphism: subtle translucent card with blur */
+  background: rgba(255, 255, 255, 0.16);
+  backdrop-filter: saturate(140%) blur(10px);
+  -webkit-backdrop-filter: saturate(140%) blur(10px);
+  padding: 0; /* we'll pad card-body to keep solid background behind text */
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  text-align: left;
+}
+
+/* Ensure text has solid background for readability inside glass card */
+.book-detail-card .card-body {
+  background: rgba(255, 255, 255, 0.96);
+  padding: 2rem;
+  border-top-right-radius: 0.75rem;
+  border-bottom-right-radius: 0.75rem;
+}
+
+/* Add subtle chips behind badges and metadata */
+.book-detail-card .badge,
+.book-detail-card .card-subtitle,
+.book-detail-card .card-text,
+.book-detail-card .card-title {
+  background-color: rgba(255, 255, 255, 1);
+}
+
+/* Improve contrast for paragraph text on any background */
+.book-detail-card .card-text,
+.book-detail-card .card-subtitle,
+.book-detail-card .small,
+.book-detail-card p {
+  color: #222;
+}
+
+.book-detail-img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto 1.5rem;
+  border-radius: 0.5rem;
+}
+
+.book-detail-card h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.book-detail-card p {
+  font-size: 1.125rem;
+  margin-bottom: 0.75rem;
+  color: var(--color-text);
+}
+
+.book-detail-card a.btn-secondary {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+}
+
+.book-list-bg .row {
+  height: auto;
+}
+@media (min-width: 576px) {
+  .book-cover { height: 240px; }
+}
+@media (min-width: 768px) {
+  .book-cover { height: 260px; }
+}
