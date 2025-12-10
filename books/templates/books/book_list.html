@@ -19,6 +19,36 @@
       {% endif %}
     </div>
   </div>
+  <form class="mb-3" method="get">
+    <div class="row g-2">
+      <div class="col-md-3">
+        <input type="text" class="form-control" name="q" placeholder="Search title, ISBN, description" value="{{ q }}">
+      </div>
+      <div class="col-md-3">
+        <input type="text" class="form-control" name="author" placeholder="Author" value="{{ author }}">
+      </div>
+      <div class="col-md-3">
+        <select class="form-select" name="genre">
+          <option value="">All genres</option>
+          {% for value,label in genre_choices %}
+            <option value="{{ value }}" {% if value == genre %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-2">
+        <select class="form-select" name="language">
+          <option value="">All languages</option>
+          {% for value,label in language_choices %}
+            <option value="{{ value }}" {% if value == language %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-1 d-grid">
+        <button class="btn btn-primary" type="submit">Filter</button>
+      </div>
+    </div>
+  </form>
+
   <div id="book-grid" class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-3 g-lg-4">
     {% include 'books/partials/_book_cards.html' %}
   </div>

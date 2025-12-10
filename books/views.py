@@ -26,8 +26,12 @@ def book_detail(request,slug):
     return render(request, "books/book_detail.html", {"book": book})
 
 def book_list(request):
-    # Search filter
+    # Search & filters
     q = request.GET.get('q', '').strip()
+    genre = request.GET.get('genre', '').strip()
+    author = request.GET.get('author', '').strip()
+    language = request.GET.get('language', '').strip()
+
     qs = Book.objects.all()
     if q:
         qs = qs.filter(
@@ -36,6 +40,12 @@ def book_list(request):
             Q(isbn__icontains=q) |
             Q(description__icontains=q)
         )
+    if genre:
+        qs = qs.filter(genre=genre)
+    if author:
+        qs = qs.filter(author__icontains=author)
+    if language:
+        qs = qs.filter(language=language)
 
     # Server-side pagination used for infinite scroll batches
     paginator = Paginator(qs.order_by('id'), 12)  # 12 per batch
@@ -55,7 +65,12 @@ def book_list(request):
     context = {
         'page_obj': page_obj,
         'q': q,
+        'genre': genre,
+        'author': author,
+        'language': language,
         'has_next': page_obj.has_next(),
         'next_page_number': page_obj.next_page_number() if page_obj.has_next() else None,
+        'genre_choices': Book.GENRE_CHOICES,
+        'language_choices': Book.LANGUAGE_CHOICES,
     }
     return render(request, "books/book_list.html", context)
