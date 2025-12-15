@@ -4,7 +4,8 @@
 
 {% block content %}
 <div class="container">
-  <h1 class="h3 mb-4">Checkout</h1>
+  <h1 class="h3 mb-3">Checkout</h1>
+  <p class="text-muted">Please fill out the form to complete your order.</p>
   {% if not items %}
     <div class="alert alert-info">Your bag is empty. <a href="{% url 'books:book_list' %}">Browse books</a>.</div>
   {% else %}
@@ -46,11 +47,48 @@
         </tfoot>
       </table>
     </div>
-    <form method="post" action="{% url 'checkout:create_session' %}" class="mt-3">
-      {% csrf_token %}
-      <button type="submit" class="btn btn-primary btn-lg">Proceed to payment</button>
-      <a class="btn btn-outline-secondary ms-2" href="{% url 'cart:view' %}">Back to bag</a>
-    </form>
+    <div class="card card-body mt-3">
+      <h2 class="h5 mb-3">Shipping and contact details</h2>
+      <form method="post" action="{% url 'checkout:create_session' %}">
+        {% csrf_token %}
+
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label" for="id_full_name">Full name</label>
+            <input class="form-control" id="id_full_name" name="full_name" type="text" placeholder="Jane Doe" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="id_email">Email</label>
+            <input class="form-control" id="id_email" name="email" type="email" placeholder="jane@example.com" required>
+          </div>
+          <div class="col-md-8">
+            <label class="form-label" for="id_address">Address</label>
+            <input class="form-control" id="id_address" name="address" type="text" placeholder="123 Main St" required>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label" for="id_city">City</label>
+            <input class="form-control" id="id_city" name="city" type="text" placeholder="City" required>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label" for="id_state">State/Province</label>
+            <input class="form-control" id="id_state" name="state" type="text" placeholder="State/Province" required>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label" for="id_postal_code">Postal code</label>
+            <input class="form-control" id="id_postal_code" name="postal_code" type="text" placeholder="Postal code" required>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label" for="id_country">Country</label>
+            <input class="form-control" id="id_country" name="country" type="text" placeholder="Country" required>
+          </div>
+        </div>
+
+        <div class="d-flex align-items-center gap-2 mt-4">
+          <button type="submit" class="btn btn-primary btn-lg">Proceed to payment</button>
+          <a class="btn btn-outline-secondary" href="{% url 'cart:view' %}">Back to bag</a>
+        </div>
+      </form>
+    </div>
   {% endif %}
 </div>
 {% endblock %}
