@@ -47,29 +47,16 @@ def book_list(request):
     if language:
         qs = qs.filter(language=language)
 
-    # Server-side pagination used for infinite scroll batches
-    paginator = Paginator(qs.order_by('id'), 12)  # 12 per batch
-    page_number = request.GET.get('page') or 1
-    page_obj = paginator.get_page(page_number)
+    # Render ALL books (no pagination)
+    page_obj = qs.order_by('id')
 
-    # If this is an infinite-scroll request, return only the cards HTML
-    if request.headers.get('x-requested-with') == 'XMLHttpRequest' or request.GET.get('load') == '1':
-        html = render_to_string(
-            'books/partials/_book_cards.html',
-            { 'page_obj': page_obj },
-            request=request
-        )
-        return HttpResponse(html)
-
-    # Initial page render
+    # Initial page render with full list
     context = {
         'page_obj': page_obj,
         'q': q,
         'genre': genre,
         'author': author,
         'language': language,
-        'has_next': page_obj.has_next(),
-        'next_page_number': page_obj.next_page_number() if page_obj.has_next() else None,
         'genre_choices': Book.GENRE_CHOICES,
         'language_choices': Book.LANGUAGE_CHOICES,
     }

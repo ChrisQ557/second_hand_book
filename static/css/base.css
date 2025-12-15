@@ -49,6 +49,9 @@ header {
   z-index: 1020;
 }
 
+
+/* Remove elevated z-index and pointer-events overrides to restore original behavior */
+
 /* Sticky footer layout using CSS Grid */
 body {
   min-height: 100vh;
@@ -195,6 +198,46 @@ footer p {
   height: 220px;
   object-fit: cover;
 }
+
+/* Title tile styles for book cards */
+.book-tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 12px;
+  border-radius: 8px;
+  color: #fff;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+.book-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+}
+
+/* Language-specific colors with a sane default */
+/* Default fallback for any tile if no specific language class matches */
+.book-tile { background-color: #607d8b; }
+
+/* Unique color for English */
+.lang-en { background-color: #2d6cdf; }
+/* Common languages mapping; extend as needed based on dataset */
+.lang-es { background-color: #c85a54; }  /* Spanish */
+.lang-de { background-color: #6b4f4f; }  /* German */
+.lang-it { background-color: #2c9678; }  /* Italian */
+.lang-fr { background-color: #7a52a3; }  /* French */
+.lang-sv { background-color: #f1c40f; }  /* Swedish (Aniara) */
+.lang-pt { background-color: #e67e22; }  /* Portuguese */
+.lang-nl { background-color: #16a085; }  /* Dutch */
+.lang-ru { background-color: #c0392b; }  /* Russian */
+.lang-zh { background-color: #8e44ad; }  /* Chinese */
+.lang-ja { background-color: #34495e; }  /* Japanese */
 
 .book-detail-page {
   /* Background image for detail pages */
