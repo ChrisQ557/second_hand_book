@@ -132,9 +132,7 @@
 
     const data = await response.json();
     if (!response.ok) {
-      resultEl.style.display = 'block';
-      resultEl.className = 'alert alert-danger';
-      resultEl.textContent = data.error || 'Unable to start payment.';
+      showToast(data.error || 'Unable to start payment.', 'danger');
       button.disabled = false;
       buttonText.textContent = 'Pay now';
       return;
@@ -151,18 +149,15 @@
     });
 
     if (error) {
-      resultEl.style.display = 'block';
-      resultEl.className = 'alert alert-danger';
-      resultEl.textContent = error.message;
+      showToast(error.message || 'Payment failed', 'danger');
       button.disabled = false;
       buttonText.textContent = 'Pay now';
     } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+      showToast('Payment succeeded in test mode!', 'success');
       window.location.href = '{% url "checkout:success" %}';
       return;
     } else {
-      resultEl.style.display = 'block';
-      resultEl.className = 'alert alert-warning';
-      resultEl.textContent = 'Payment status: ' + (paymentIntent ? paymentIntent.status : 'unknown');
+      showToast('Payment status: ' + (paymentIntent ? paymentIntent.status : 'unknown'), 'warning');
     }
   });
 </script>
