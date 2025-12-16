@@ -187,9 +187,9 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Stripe configuration (Test mode keys)
-STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_PUBLIC_KEY', 'pk_test_51SeuuJEbLBm7dBWeVrXbp04gnsE90ybc57muNQX1J7AHJGKc7qOgZ7dqzYD7hjcgmrUGaOACgDNOwTAY5UOohWtC007vAXyogC')
-STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY', 'sk_test_51SeuuJEbLBm7dBWevkOUXBaAfvWMqiIuQuyuzOQt8PSKXcFKkYcRncqilqi3B5Re57ZzWMWK2yicrQVjsu9CeH0z00v6GgZ0D1')
+# Stripe configuration (use environment variables; no hardcoded defaults)
+STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_PUBLIC_KEY', '')
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY', '')
 STRIPE_CURRENCY = os.environ.get('STRIPE_CURRENCY', 'USD')
 
 # Authentication redirects
