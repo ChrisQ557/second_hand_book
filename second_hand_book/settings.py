@@ -14,6 +14,10 @@ from pathlib import Path
 import os
 import dj_database_url
 import logging
+from dotenv import load_dotenv
+
+# Load environment variables from .env in project root (development convenience)
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
