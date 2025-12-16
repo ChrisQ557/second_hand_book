@@ -46,6 +46,14 @@ def checkout_view(request):
 
 
 def checkout_success(request):
+    # Clear the cart from the session on successful payment
+    if 'cart' in request.session:
+        try:
+            del request.session['cart']
+        except Exception:
+            # If deletion fails for any reason, fall back to emptying it
+            request.session['cart'] = {}
+        request.session.modified = True
     return render(request, 'checkout/success.html')
 
 
