@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Order complete | Second Hand Book{% endblock %}
+
+{% block content %}
+<div class="container text-center py-5">
+  <div class="display-6 mb-3">Thank you!</div>
+  <p class="lead">Your payment was successful in test mode.</p>
+  <p class="text-muted">A confirmation has been recorded. In a production app, you'd see your order details here.</p>
+  <div class="mt-4 d-flex gap-2 justify-content-center">
+    <a class="btn btn-primary" href="/">Return home</a>
+    <a class="btn btn-outline-secondary" href="{% url 'books:book_list' %}">Browse more books</a>
+  </div>
+</div>
+{% endblock %}

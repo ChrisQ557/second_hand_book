@@ -5,7 +5,7 @@
 {% block content %}
 <div class="container">
   <h1 class="h3 mb-3">Checkout</h1>
-  <p class="text-muted">Please fill out the form to complete your order.</p>
+  
   {% if not items %}
     <div class="alert alert-info">Your bag is empty. <a href="{% url 'books:book_list' %}">Browse books</a>.</div>
   {% else %}
@@ -47,15 +47,16 @@
         </tfoot>
       </table>
     </div>
+    <p class="text-muted">Please fill out the form to complete your order.</p>
     <div class="card card-body mt-3">
       <h2 class="h5 mb-3">Shipping and contact details</h2>
-      <form method="post" action="{% url 'checkout:create_session' %}">
+      <form id="payment-form">
         {% csrf_token %}
 
         <div class="row g-3">
           <div class="col-md-6">
             <label class="form-label" for="id_full_name">Full name</label>
-            <input class="form-control" id="id_full_name" name="full_name" type="text" placeholder="Jane Doe" required>
+            <input class="form-control" id="id_full_name" name="full_name" type="text" required>
           </div>
           <div class="col-md-6">
             <label class="form-label" for="id_email">Email</label>
@@ -63,32 +64,107 @@
           </div>
           <div class="col-md-8">
             <label class="form-label" for="id_address">Address</label>
-            <input class="form-control" id="id_address" name="address" type="text" placeholder="123 Main St" required>
+            <input class="form-control" id="id_address" name="address" type="text" required>
           </div>
           <div class="col-md-4">
             <label class="form-label" for="id_city">City</label>
-            <input class="form-control" id="id_city" name="city" type="text" placeholder="City" required>
+            <input class="form-control" id="id_city" name="city" type="text" required>
           </div>
           <div class="col-md-4">
             <label class="form-label" for="id_state">State/Province</label>
-            <input class="form-control" id="id_state" name="state" type="text" placeholder="State/Province" required>
+            <input class="form-control" id="id_state" name="state" type="text" required>
           </div>
           <div class="col-md-4">
             <label class="form-label" for="id_postal_code">Postal code</label>
-            <input class="form-control" id="id_postal_code" name="postal_code" type="text" placeholder="Postal code" required>
+            <input class="form-control" id="id_postal_code" name="postal_code" type="text" required>
           </div>
           <div class="col-md-4">
             <label class="form-label" for="id_country">Country</label>
-            <input class="form-control" id="id_country" name="country" type="text" placeholder="Country" required>
+            <input class="form-control" id="id_country" name="country" type="text" required>
           </div>
         </div>
 
+        <hr class="my-4">
+        <h3 class="h6">Payment</h3>
+        <div id="card-element" class="form-control py-2"></div>
+        <div id="card-errors" class="text-danger small mt-2" role="alert"></div>
+
         <div class="d-flex align-items-center gap-2 mt-4">
-          <button type="submit" class="btn btn-primary btn-lg">Proceed to payment</button>
+          <button id="submit" type="submit" class="btn btn-primary btn-lg">
+            <span id="button-text">Pay now</span>
+          </button>
           <a class="btn btn-outline-secondary" href="{% url 'cart:view' %}">Back to bag</a>
         </div>
       </form>
+
+      <div id="payment-result" class="mt-3" style="display:none;"></div>
     </div>
   {% endif %}
 </div>
+
+{% block extra_js %}
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+  const stripePublicKey = "{{ STRIPE_PUBLIC_KEY|escapejs }}";
+  const stripe = Stripe(stripePublicKey);
+  const elements = stripe.elements();
+  const card = elements.create('card');
+  card.mount('#card-element');
+
+  const form = document.getElementById('payment-form');
+  const resultEl = document.getElementById('payment-result');
+  const button = document.getElementById('submit');
+  const buttonText = document.getElementById('button-text');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    button.disabled = true;
+    buttonText.textContent = 'Processing...';
+
+    const response = await fetch('{% url "checkout:create_payment_intent" %}', {
+      method: 'POST',
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest'
+      },
+      credentials: 'same-origin'
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+      resultEl.style.display = 'block';
+      resultEl.className = 'alert alert-danger';
+      resultEl.textContent = data.error || 'Unable to start payment.';
+      button.disabled = false;
+      buttonText.textContent = 'Pay now';
+      return;
+    }
+
+    const { error, paymentIntent } = await stripe.confirmCardPayment(data.clientSecret, {
+      payment_method: {
+        card: card,
+        billing_details: {
+          name: document.getElementById('id_full_name').value,
+          email: document.getElementById('id_email').value,
+        }
+      }
+    });
+
+    if (error) {
+      resultEl.style.display = 'block';
+      resultEl.className = 'alert alert-danger';
+      resultEl.textContent = error.message;
+      button.disabled = false;
+      buttonText.textContent = 'Pay now';
+    } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+      window.location.href = '{% url "checkout:success" %}';
+      return;
+    } else {
+      resultEl.style.display = 'block';
+      resultEl.className = 'alert alert-warning';
+      resultEl.textContent = 'Payment status: ' + (paymentIntent ? paymentIntent.status : 'unknown');
+    }
+  });
+</script>
+{% endblock %}
 {% endblock %}
