@@ -7,6 +7,8 @@ from decimal import Decimal, ROUND_HALF_UP
 import stripe
 from cart.services import _get_cart, total_qty
 from books.models import Book
+from django.contrib.auth.decorators import login_required
+from .models import Order, OrderItem
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -45,16 +47,36 @@ def checkout_view(request):
     return render(request, 'checkout/checkout.html', context)
 
 
+@login_required
 def checkout_success(request):
-    # Clear the cart from the session on successful payment
+    cart = _get_cart(request.session)
+    order = None
+    if cart:
+        total = sum(
+            int(entry.get('qty', 0)) * (getattr(Book.objects.get(pk=int(key)), 'price') or 0)
+            for key, entry in cart.items()
+        )
+        order = Order.objects.create(user=request.user, total_amount=total)
+        for key, entry in cart.items():
+            try:
+                book = Book.objects.get(pk=int(key))
+            except Book.DoesNotExist:
+                continue
+            qty = int(entry.get('qty', 0))
+            OrderItem.objects.create(
+                order=order,
+                book=book,
+                quantity=qty,
+                price_at_purchase=book.price or 0,
+            )
+    # Clear the cart from session
     if 'cart' in request.session:
         try:
             del request.session['cart']
         except Exception:
-            # If deletion fails for any reason, fall back to emptying it
             request.session['cart'] = {}
         request.session.modified = True
-    return render(request, 'checkout/success.html')
+    return render(request, 'checkout/success.html', {'order': order})
 
 
 @csrf_exempt
@@ -94,3 +116,10 @@ def create_payment_intent(request):
         })
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
+
+
+
+@login_required
+def order_history(request):
+    orders = request.user.orders.prefetch_related("items__book").order_by("-order_date")
+    return render(request, "account/order_history.html", {"orders": orders})

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Your Orders{% endblock %}
+{% block content %}
+<h2>Your Order History</h2>
+{% for order in orders %}
+  <div class="order mb-4 p-3 border">
+    <h5>Order #{{ order.id }} – {{ order.order_date|date:"Y-m-d H:i" }} – {{ order.status }}</h5>
+    <ul class="list-group">
+      {% for item in order.items.all %}
+        <li class="list-group-item d-flex justify-content-between">
+          <span>{{ item.book.title }} × {{ item.quantity }}</span>
+          <span>${{ item.price_at_purchase }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+    <p class="mt-2"><strong>Total:</strong> ${{ order.total_amount }}</p>
+  </div>
+{% empty %}
+  <p>You have no past orders.</p>
+{% endfor %}
+{% endblock %}

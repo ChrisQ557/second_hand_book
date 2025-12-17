@@ -58,8 +58,13 @@
                                 Account
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
+                                {% if request.user.is_authenticated %}
+                                <li><a class="dropdown-item" href="{% url 'checkout:history' %}">Order History</a></li>
+                                <li><a class="dropdown-item" href="{% url 'account_logout' %}">Sign out</a></li>
+                                {% else %}
                                 <li><a class="dropdown-item" href="{% url 'account_login' %}">Sign in</a></li>
                                 <li><a class="dropdown-item" href="{% url 'account_signup' %}">Create account</a></li>
+                                {% endif %}
                             </ul>
                         </li>
                     </ul>
