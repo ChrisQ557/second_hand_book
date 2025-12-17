@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Sign out — Second Hand Book" %}{% endblock %}
+
+{% block content %}
+<div class="container py-5 auth-page">
+  <h1 class="mb-4">{% trans "Sign out" %}</h1>
+
+  <div class="auth-card">
+    <p>{% trans "Are you sure you want to sign out?" %}</p>
+    <form method="post" action="{% url 'account_logout' %}">
+      {% csrf_token %}
+      <div class="auth-actions mt-3">
+        <button type="submit" class="btn btn-danger">{% trans "Sign out" %}</button>
+        <a class="btn btn-link" href="{% url 'home' %}">{% trans "Cancel" %}</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
