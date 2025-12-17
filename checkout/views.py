@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
@@ -118,8 +118,20 @@ def create_payment_intent(request):
         return JsonResponse({'error': str(e)}, status=400)
 
 
-
 @login_required
 def order_history(request):
     orders = request.user.orders.prefetch_related("items__book").order_by("-order_date")
     return render(request, "account/order_history.html", {"orders": orders})
+
+@login_required
+def delete_order(request, order_id):
+    order = get_object_or_404(Order, pk=order_id, user=request.user)
+    order.delete()
+    return redirect('checkout:history')
+
+@login_required
+def mark_received(request, order_id):
+    order = get_object_or_404(Order, pk=order_id, user=request.user)
+    order.received = True
+    order.save()
+    return redirect('checkout:history')
