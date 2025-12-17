@@ -8,7 +8,9 @@ import stripe
 from cart.services import _get_cart, total_qty
 from books.models import Book
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from .models import Order, OrderItem
+from .services import create_order_from_cart
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -127,6 +129,7 @@ def order_history(request):
 def delete_order(request, order_id):
     order = get_object_or_404(Order, pk=order_id, user=request.user)
     order.delete()
+    messages.success(request, "Order deleted successfully.")
     return redirect('checkout:history')
 
 @login_required
@@ -134,4 +137,5 @@ def mark_received(request, order_id):
     order = get_object_or_404(Order, pk=order_id, user=request.user)
     order.received = True
     order.save()
+    messages.success(request, "Order marked as received.")
     return redirect('checkout:history')

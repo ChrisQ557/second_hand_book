@@ -3,8 +3,8 @@
 {% block content %}
 <h2>Your Order History</h2>
 {% for order in orders %}
-  <div class="order mb-4 p-3 border">
-    <h5>Order #{{ order.id }} – {{ order.order_date|date:"Y-m-d H:i" }} – {{ order.status }}</h5>
+  <section class="order mb-4 p-3 border" aria-labelledby="order-{{ order.id }}">
+    <h3 id="order-{{ order.id }}">Order #{{ order.id }} • {{ order.order_date|date:"Y-m-d H:i" }} • {{ order.status }}</h3>
     <ul class="list-group">
       {% for item in order.items.all %}
         <li class="list-group-item d-flex justify-content-between">
@@ -42,7 +42,7 @@
         </div>
       </div>
 +    </div>
-  </div>
+  </section>
 {% empty %}
   <p>You have no past orders.</p>
 {% endfor %}
