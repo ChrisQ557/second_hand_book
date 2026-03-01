@@ -74,11 +74,10 @@ AUTHENTICATION_BACKENDS = [
 
 ACCOUNT_LOGIN_METHODS = {'username', 'email'}
 ACCOUNT_SIGNUP_FIELDS = [
-    'email*',
-    'email2*',
-    'username*',
-    'password1*',
-    'password2*',
+    'email',
+    'username',
+    'password1',
+    'password2',
 ]
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_EMAIL_REQUIRED = True

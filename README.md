@@ -27,6 +27,68 @@ Users can:
 
 ---
 
+## 📖 User Stories
+
+The main demographic for the site is budget-conscious book lovers and environmentally aware individuals seeking affordable, pre-owned books while supporting sustainable shopping practices.
+
+### Visitors
+
+As a visitor, I would like to see what the second-hand book store offers so I can decide if it's right for me.
+
+As a visitor, I would like to browse the available book collection (by title, author, genre, or language) so I can find books that interest me.
+
+As a visitor, I would like to view detailed book information (cover, description, author, publication date, ISBN, price, language, genre) so I can make informed purchase decisions.
+
+As a visitor, I would like to filter books by language or genre so I can easily find books matching my preferences.
+
+As a visitor, I would like to search for books by title, author, or ISBN so I can quickly locate specific books.
+
+As a visitor, I would like to see book pricing clearly displayed so I can understand the cost before adding to my cart.
+
+As a visitor, I would like the site to be responsive so I can browse comfortably on my phone, tablet, or desktop.
+
+As a visitor, I would like to register an account so I can make purchases and track my order history.
+
+### Registered Users / Book Buyers
+
+As a registered user, I would like to sign in to my account so I can access my shopping cart and order history.
+
+As a registered user, I would like to add books to my shopping cart so I can purchase multiple items at once.
+
+As a registered user, I would like to view my shopping cart with item quantities and prices so I can review my purchase before checkout.
+
+As a registered user, I would like to update quantities in my cart so I can adjust my order before purchasing.
+
+As a registered user, I would like to remove items from my cart so I can change my purchase selection.
+
+As a registered user, I would like to proceed to checkout securely so I can complete my book purchase with confidence.
+
+As a registered user, I would like to make payments via Stripe so I can pay safely using my credit or debit card.
+
+As a registered user, I would like to receive a confirmation message after purchase so I know my order was successfully completed.
+
+As a registered user, I would like to view my order history with past purchases so I can track what I've bought.
+
+As a registered user, I would like to mark orders as received so I can confirm when items arrive.
+
+As a registered user, I would like to delete orders from my history so I can manage my account records.
+
+As a registered user, I would like to sign out of my account so my information stays secure on shared devices.
+
+### Admin / Site Owner
+
+As an admin, I would like to manage all books, orders, and users via the Django admin panel so I can oversee the application.
+
+As an admin, I would like to add, edit, and delete books from the catalog so I can keep the inventory current.
+
+As an admin, I would like to view order details and customer information so I can process and ship orders efficiently.
+
+As an admin, I would like the site to be visually appealing and professional so it attracts customers and builds trust.
+
+As an admin, I would like checkout to be restricted to signed-in users so I can ensure only registered customers make purchases.
+
+---
+
 ## 🧱 Features
 
 - 🎨 Responsive design with Bootstrap 5.

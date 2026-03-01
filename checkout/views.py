@@ -55,7 +55,9 @@ def checkout_success(request):
     order = None
     if cart:
         total = sum(
-            int(entry.get('qty', 0)) * (getattr(Book.objects.get(pk=int(key)), 'price') or 0)
+            int(entry.get('qty', 0)) * (
+                getattr(Book.objects.get(pk=int(key)), 'price') or 0
+            )
             for key, entry in cart.items()
         )
         order = Order.objects.create(user=request.user, total_amount=total)
@@ -122,8 +124,14 @@ def create_payment_intent(request):
 
 @login_required
 def order_history(request):
-    orders = request.user.orders.prefetch_related("items__book").order_by("-order_date")
-    return render(request, "account/order_history.html", {"orders": orders})
+    orders = (
+        request.user.orders.prefetch_related("items__book")
+        .order_by("-order_date")
+    )
+    return render(
+        request, "account/order_history.html", {"orders": orders}
+    )
+
 
 @login_required
 def delete_order(request, order_id):
@@ -131,6 +139,7 @@ def delete_order(request, order_id):
     order.delete()
     messages.success(request, "Order deleted successfully.")
     return redirect('checkout:history')
+
 
 @login_required
 def mark_received(request, order_id):

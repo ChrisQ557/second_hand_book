@@ -20,10 +20,12 @@ def add_to_bag(request, slug):
     request.session.modified = True
     return redirect('books:book_detail', slug=slug)
 
+
 # Create your views here.
-def book_detail(request,slug):
+def book_detail(request, slug):
     book = get_object_or_404(Book, slug=slug)
     return render(request, "books/book_detail.html", {"book": book})
+
 
 def book_list(request):
     # Search & filters
