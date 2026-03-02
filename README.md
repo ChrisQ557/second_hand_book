@@ -227,7 +227,95 @@ For additional test card numbers and scenarios, see: https://stripe.com/docs/tes
 
 ---
 
-## 📬 Contact
+## � Database Schema
+
+The complete database schema for this project is documented in [SCHEMA.md](SCHEMA.md). This file contains detailed information about all models, their fields, relationships, and constraints.
+
+---
+
+## 🚀 Deployment
+
+### Local Setup
+
+The getting started section above covers the basic local setup. To ensure everything is configured correctly for local development:
+
+1. Verify your `.env` file is set to `DJANGO_DEBUG=true`
+2. Use SQLite (default) for local development, or configure PostgreSQL if preferred
+3. Run migrations: `python manage.py migrate`
+4. Load sample data (optional): `python manage.py loaddata fixtures/my_books.json fixtures/new_books_multilang.json`
+5. Start the development server: `python manage.py runserver`
+
+### Heroku Deployment
+
+This project is configured for deployment on Heroku. Follow these steps to deploy:
+
+#### Prerequisites
+- Heroku CLI installed and logged in
+- Git repository initialized
+- All code committed to git
+
+#### Deployment Steps
+
+1. **Create a Heroku app** (if not already created):
+   ```sh
+   heroku create your-app-name
+   ```
+
+2. **Add a PostgreSQL database**:
+   ```sh
+   heroku addons:create heroku-postgresql:essential-0
+   ```
+   Heroku automatically sets the `DATABASE_URL` environment variable.
+
+3. **Set environment variables** on Heroku:
+   ```sh
+   heroku config:set DJANGO_SECRET_KEY=your-secret-key
+   heroku config:set DJANGO_DEBUG=false
+   heroku config:set STRIPE_PUBLIC_KEY=pk_live_...
+   heroku config:set STRIPE_SECRET_KEY=sk_live_...
+   ```
+
+4. **Deploy to Heroku**:
+   ```sh
+   git push heroku main
+   ```
+   The `Procfile` automatically runs:
+   - Release phase: `python manage.py migrate` (runs migrations before app starts)
+   - Web dyno: `gunicorn second_hand_book.wsgi --log-file -`
+
+5. **Collect static files**:
+   - Static files are automatically collected during deployment via the `Procfile` release phase.
+   - The project uses WhiteNoise middleware for serving static files in production.
+
+6. **Create a superuser** (for admin access on Heroku):
+   ```sh
+   heroku run python manage.py createsuperuser
+   ```
+
+7. **Open your app**:
+   ```sh
+   heroku open
+   ```
+
+#### Environment Configuration
+
+Heroku uses the following configuration:
+- **Python version**: 3.12 (specified in `runtime.txt`)
+- **WSGI server**: Gunicorn
+- **Database**: PostgreSQL (Heroku Postgres)
+- **Static files**: WhiteNoise middleware with S3 or local serving options
+
+#### Important Notes
+
+- Always use `DJANGO_DEBUG=false` in production
+- Use Heroku's environment variable system (never commit `.env` files)
+- Keep your Stripe keys separate for development (pk_test_, sk_test_) and production (pk_live_, sk_live_)
+- Monitor logs with: `heroku logs --tail`
+- Scale dynos if needed with: `heroku ps:scale web=2`
+
+---
+
+## �📬 Contact
 
 Built with care by Christopher Quinones.
 
