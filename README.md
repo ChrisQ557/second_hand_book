@@ -19,6 +19,7 @@ Welcome to **Second Hand Book Store** — a Django-based assessment project prov
 - [Getting Started](#-getting-started)
 - [Stripe Testing](#-stripe-testing)
 - [Database Schema](#-database-schema)
+- [Testing](#-testing)
 - [Deployment](#-deployment)
 - [Contact](#-contact)
 - [Acknowledgements](#-acknowledgements)
@@ -273,6 +274,19 @@ For additional test card numbers and scenarios, see: https://stripe.com/docs/tes
 ## � Database Schema
 
 The complete database schema for this project is documented in [SCHEMA.md](SCHEMA.md). This file contains detailed information about all models, their fields, relationships, and constraints.
+
+---
+
+## 🧪 Testing
+
+All testing and validation evidence for this project is documented in [TESTING.md](TESTING.md). This includes:
+
+- HTML, CSS, JavaScript, and Python validation results
+- Lighthouse audit scores
+- Manual testing scenarios and outcomes
+- Bug tracker with known and resolved issues
+
+Please review [TESTING.md](TESTING.md) for full details.
 
 ---
 
