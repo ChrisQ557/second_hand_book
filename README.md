@@ -180,9 +180,7 @@ second_hand_book/
 
 ## 📸 Screenshots
 
-![Screenshot 1](docs/screenshots/Screenshot%202026-03-01%20at%2018.43.13.png)
-
-![Screenshot 2](docs/screenshots/Screenshot%202026-03-04%20at%2021.04.41.png)
+![Screenshot 1](docs/screenshots/Screenshot%202026-03-04%20at%2021.04.41.png)
 
 ![Screenshot 3](docs/screenshots/Screenshot%202026-03-04%20at%2021.04.52.png)
 
