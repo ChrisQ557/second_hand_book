@@ -2,6 +2,27 @@
 
 Welcome to **Second Hand Book Store** — a Django-based assessment project providing a full e-commerce flow for browsing, cart management, checkout (with Stripe), and user order history.
 
+🔗 **Live Site:** [https://second-hand-book-57a183b732b9.herokuapp.com/](https://second-hand-book-57a183b732b9.herokuapp.com/)
+
+---
+
+## 📋 Table of Contents
+
+- [Overview](#-overview)
+- [Intended Users](#-intended-users)
+- [User Stories](#-user-stories)
+- [Features](#-features)
+- [Folder Structure](#-folder-structure)
+- [Pages Breakdown](#-pages-breakdown)
+- [Screenshots](#-screenshots)
+- [Technologies Used](#-technologies-used)
+- [Getting Started](#-getting-started)
+- [Stripe Testing](#-stripe-testing)
+- [Database Schema](#-database-schema)
+- [Deployment](#-deployment)
+- [Contact](#-contact)
+- [Acknowledgements](#-acknowledgements)
+
 ---
 
 ## 🌟 Overview
@@ -154,6 +175,30 @@ second_hand_book/
 
 ### Account Flows
 - Sign in, Sign up, Sign out pages styled uniformly
+
+---
+
+## 📸 Screenshots
+
+![Screenshot 1](docs/screenshots/Screenshot%202026-03-01%20at%2018.43.13.png)
+
+![Screenshot 2](docs/screenshots/Screenshot%202026-03-04%20at%2021.04.41.png)
+
+![Screenshot 3](docs/screenshots/Screenshot%202026-03-04%20at%2021.04.52.png)
+
+![Screenshot 4](docs/screenshots/Screenshot%202026-03-04%20at%2021.05.21.png)
+
+![Screenshot 5](docs/screenshots/Screenshot%202026-03-04%20at%2021.05.46.png)
+
+![Screenshot 6](docs/screenshots/Screenshot%202026-03-04%20at%2021.06.39.png)
+
+![Screenshot 7](docs/screenshots/Screenshot%202026-03-04%20at%2021.07.00.png)
+
+![Screenshot 8](docs/screenshots/Screenshot%202026-03-04%20at%2021.07.12.png)
+
+![Screenshot 9](docs/screenshots/Screenshot%202026-03-04%20at%2021.07.28.png)
+
+![Screenshot 10](docs/screenshots/Screenshot%202026-03-04%20at%2021.07.32.png)
 
 ---
 
